@@ -74,9 +74,9 @@ export default function Page() {
           <thead><tr><th>Категория</th><th>Описание</th><th className="amount">Сумма</th></tr></thead>
           <tbody>
             {sprint.expenses.map((expense, expenseIndex) => <tr key={expenseIndex} className={expenseIndex === 7 ? 'savings-source' : ''}><td><EditableCell value={expense.category} type="text" onSave={(value) => updateExpense(sprintIndex, expenseIndex, { category: value })} /></td><td><EditableCell value={expense.description} type="text" onSave={(value) => updateExpense(sprintIndex, expenseIndex, { description: value })} /></td><td className="amount"><EditableCell value={expense.amount} type="number" onSave={(value) => updateExpense(sprintIndex, expenseIndex, { amount: safeNumber(value) })} /></td></tr>)}
-            <tr className="income-row"><td><span>Доход</span></td><td><span className="muted">за спринт</span></td><td className="amount"><EditableCell value={sprint.income} type="number" onSave={(value) => updateSprint(sprintIndex, { income: safeNumber(value) })} /></td></tr>
-            <tr className="total-row balance-row"><td><span>Остаток</span></td><td><span className="muted">доступно</span></td><td className="amount"><strong>{money(totals[sprintIndex].balance)}</strong></td></tr>
-            <tr className="total-row savings-row"><td><span>Накопления</span></td><td><span className="muted">всего</span></td><td className="amount"><strong>{money(totals[sprintIndex].savings)}</strong></td></tr>
+            <tr className="income-row summary-row"><td><span>Доход</span></td><td><span className="muted">за спринт</span></td><td className="amount"><EditableCell value={sprint.income} type="number" onSave={(value) => updateSprint(sprintIndex, { income: safeNumber(value) })} /></td></tr>
+            <tr className="total-row balance-row summary-row"><td><span className="balance-row-text">Остаток</span></td><td><span className="muted">доступно</span></td><td className="amount"><strong>{money(totals[sprintIndex].balance)}</strong></td></tr>
+            <tr className="total-row savings-row summary-row"><td><span className="savings-row-text">Накопления</span></td><td><span className="muted">всего</span></td><td className="amount"><strong>{money(totals[sprintIndex].savings)}</strong></td></tr>
           </tbody>
         </table>
         <footer><span>Расходы</span><span>{money(totals[sprintIndex].spent)}</span></footer>
