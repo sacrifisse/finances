@@ -62,11 +62,20 @@ export default function Page() {
 
   const updateSprint = (sprintIndex: number, change: Partial<Sprint>) => setSprints((current) => current.map((sprint, index) => index === sprintIndex ? { ...sprint, ...change } : sprint))
   const updateExpense = (sprintIndex: number, expenseIndex: number, change: Partial<Expense>) => setSprints((current) => current.map((sprint, index) => index === sprintIndex ? { ...sprint, expenses: sprint.expenses.map((expense, row) => row === expenseIndex ? { ...expense, ...change } : expense) } : sprint))
+  const resetAll = () => {
+    if (!window.confirm('Очистить все значения во всех таблицах? Это действие нельзя отменить.')) return
+    setSprints((current) => current.map((sprint) => ({
+      ...sprint,
+      title: '',
+      income: 0,
+      expenses: sprint.expenses.map((expense) => ({ ...expense, category: '', description: '', amount: 0 })),
+    })))
+  }
 
   return <main className="dashboard-shell">
     <header className="dashboard-header">
       <div><p className="eyebrow">Личный финансовый учёт</p><h1>Спринты</h1></div>
-      <div className="header-meta"><span className="status-dot" /> <span>Сохранено локально</span></div>
+      <div className="header-actions"><div className="header-meta"><span className="status-dot" /> <span>Сохранено локально</span></div><button className="reset-button" type="button" onClick={resetAll}>Сбросить все значения</button></div>
     </header>
     <section className="sprint-grid" aria-label="Финансовые спринты">
       {sprints.map((sprint, sprintIndex) => <article className="sprint-card" key={sprintIndex}>
